@@ -1,8 +1,12 @@
 package conf;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.StandardCopyOption.*;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import org.ini4j.InvalidFileFormatException;
 import org.ini4j.Wini;
 
@@ -29,8 +33,33 @@ public class ConfigManager {
 
 		if(!p2.exists()) {
 			String defaultConfig = "other" + File.separator + "std_config.ini";
-			Files.copy(defaultConfig, configFile);
+			try {
+				copyFile(defaultConfig, configFile);
+			} catch (IOException e) {
+				// zde je to ok, program zobrazí chybovou hlášku během načítání
+				// konfigurace
+			}
 		}
+	}
+	
+	private static void copyFile(String one, String two) throws IOException {
+		File source = new File(one);
+		File dest = new File(two);
+		
+	    InputStream is = null;
+	    OutputStream os = null;
+	    try {
+	        is = new FileInputStream(source);
+	        os = new FileOutputStream(dest);
+	        byte[] buffer = new byte[1024];
+	        int length;
+	        while ((length = is.read(buffer)) > 0) {
+	            os.write(buffer, 0, length);
+	        }
+	    } finally {
+	        is.close();
+	        os.close();
+	    }
 	}
 
 	/**
