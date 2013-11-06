@@ -1,0 +1,10 @@
+Package: seasnake
+Version: 0.1
+Section: games
+Priority: optional
+Recommends:
+Depends: sun-java6-bin (>= 6.26-1)
+Architecture: all
+Installed-Size: 1127
+Maintainer: Ondřej Bockschneider <firzen.developer@gmail.com>
+Description: Snake like game with fish, turtles, starfish and corals.
